@@ -16,6 +16,8 @@ class User extends Equatable {
 
   @override
   bool? get stringify => true;
+// My addition
+  User empty() => const User(id: '', email: '');
 
   UserEntity toEntity() {
     return UserEntity(
