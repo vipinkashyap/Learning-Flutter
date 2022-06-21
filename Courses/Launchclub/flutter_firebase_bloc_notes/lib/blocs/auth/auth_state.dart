@@ -4,7 +4,7 @@ abstract class AuthState extends Equatable {
   const AuthState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 //First time user opens app they are unauthenticated
@@ -24,7 +24,7 @@ class Anonymous extends AuthState {
   bool? get stringify => true;
 
   @override
-  List<Object> get props => [user];
+  List<Object?> get props => [user];
 }
 
 //Authenticated state
@@ -38,5 +38,5 @@ class Authenticated extends AuthState {
   bool? get stringify => true;
 
   @override
-  List<Object> get props => [user];
+  List<Object?> get props => [user];
 }

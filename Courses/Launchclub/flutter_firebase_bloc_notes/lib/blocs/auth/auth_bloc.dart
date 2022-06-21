@@ -20,39 +20,40 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<Logout>(_onLogout);
   }
 
-  _onAppStarted(event, emit) async* {
+  _onAppStarted(AppStarted event, Emitter<AuthState> emit) async {
     try {
       User? currentUser = await _authRepository.getCurrentUser();
+
       currentUser ??= await _authRepository.loginAnonymously();
       final isAnonymous = await _authRepository.isAnonymous();
       if (isAnonymous) {
-        yield Anonymous(currentUser);
+        emit(Anonymous(currentUser));
       } else {
-        yield Authenticated(currentUser);
+        emit(Authenticated(currentUser));
       }
     } catch (err) {
       log(err.toString());
-      yield Unauthenticated();
+      emit(Unauthenticated());
     }
   }
 
-  _onLogin(event, emit) async* {
+  _onLogin(Login event, Emitter<AuthState> emit) async {
     try {
       User? currentUser = await _authRepository.getCurrentUser();
-      yield Authenticated(currentUser!);
+      emit(Authenticated(currentUser!));
     } catch (err) {
       log(err.toString());
-      yield Unauthenticated();
+      emit(Unauthenticated());
     }
   }
 
-  _onLogout(event, emit) async* {
+  _onLogout(Logout event, Emitter<AuthState> emit) async {
     try {
       User? currentUser = await _authRepository.logOut();
-      yield AppStarted();
+      emit(Unauthenticated());
     } catch (err) {
       log(err.toString());
-      yield Unauthenticated();
+      emit(Unauthenticated());
     }
   }
 }
