@@ -13,7 +13,6 @@ class UserEntity extends Equatable {
   List<Object?> get props => [id, email];
 
 //Write object to db
-// We write only the email field here as the id isn't a field in the db
   Map<String, dynamic> toDocument() {
     return {
       'email': email,
@@ -21,7 +20,6 @@ class UserEntity extends Equatable {
   }
 
   // Read object from db
-  // From a firestore document snapshot
   factory UserEntity.fromSnapshot(DocumentSnapshot doc) {
     return UserEntity(
       id: doc.id,
